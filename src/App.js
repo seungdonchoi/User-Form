@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import "./styles.css"
 
 const App = () => {
   const [values, setValues] = useState({
-    name:'', email:'', password:'', occupation:'', state: ''
+    name: '', email: '', password: '', occupation: '', state: ''
   });
   const [listOfOccupations, setOfOccupations] = useState([]);
   const [listOfStates, setOfStates] = useState([]);
 
   const handleChange = (event) => {
     return ({ target: { value } }) => {
-      setValues(prev => ({...prev, [event]: value }));
+      setValues(prev => ({ ...prev, [event]: value }));
     }
   };
   const handleSubmit = async (event) => {
@@ -21,7 +22,7 @@ const App = () => {
         return;
       }
       await axios.post('https://frontend-take-home.fetchrewards.com/form', {
-        name:  values.name,
+        name: values.name,
         email: values.email,
         password: values.password,
         occupation: values.occupation,
@@ -48,34 +49,29 @@ const App = () => {
 
 
   return (
-    <div>
+    <div className='main'>
       <form>
-        <label>Full Name:  </label>
-        <input id='full-name' type='text' value={values.name} onChange={handleChange('name')} />
-        <br/>
-        <label>Email:  </label>
-        <input id='email' type='email' value={values.email} onChange={handleChange('email')} />
-        <br/>
-        <label>Password:  </label>
-        <input id='password' type='password' value={values.password} onChange={handleChange('password')} />
-        <br/>
-        <label>Occupation:  </label>
+        <label>Full Name:</label><br />
+        <input id='full-name' type='text' value={values.name} onChange={handleChange('name')} /><br />
+        <label>Email:</label><br />
+        <input id='email' type='email' value={values.email} onChange={handleChange('email')} /><br />
+        <label>Password:</label> <br />
+        <input id='password' type='password' value={values.password} onChange={handleChange('password')} /><br />
+        <label>Occupation:</label><br />
         <select value={values.occupation} onChange={handleChange('occupation')}>
           <option></option>
           {listOfOccupations.map(occupation => (
             <option value={occupation} key={occupation}>{occupation}</option>
           ))}
-        </select>
-        <br/>
-        <label>State:  </label>
+        </select><br />
+        <label>State:</label><br />
         <select value={values.state} onChange={handleChange('state')}>
           <option value=""></option>
           {listOfStates.map(state => (
             <option value={state.name} key={state.name} >{state.name}</option>
           ))}
-        </select>
-        <br/>
-        <button onClick={handleSubmit} type="submit">Submit</button>
+        </select><br />
+        <button onClick={handleSubmit} type="submit">Submit</button><br />
       </form>
     </div>
   )
